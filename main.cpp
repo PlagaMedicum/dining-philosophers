@@ -2,10 +2,12 @@
 
 int main(int argc, char** argv)
 {
-    Philosopher("Plato", 1, 3);
-    Philosopher("Kant", 2, 2);
-    Philosopher("Nietzsche", 3, 1);
+    add_phil("Plato", 1, 3);
+    add_phil("Kant", 2, 2);
+    add_phil("Nietzsche", 3, 1);
 
     start_dinner();
+
+    return 0;
 }
 

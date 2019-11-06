@@ -8,18 +8,20 @@ class Philosopher
 {
 private:
     std::string name;
-    int thinking_t;
-    int eating_t;
-    Stick l_stick, r_stick;
+    int think_t;
+    int eat_t;
+    Stick *l_stick, *r_stick;
 public:
-    Philosopher(std::string name, int thinking_t, int eating_t)
+    Philosopher(std::string name, int think_t, int eat_t)
         : name(name),
-        thinking_t(thinking_t),
-        eating_t(eating_t)
+        think_t(think_t),
+        eat_t(eat_t)
     {}
     void start();
-    void take_stick();
-    void put_stick();
+    void set_l_stick(Stick* l_stick);
+    void set_r_stick(Stick* r_stick);
+    //void take_stick();
+    //void put_stick();
 };
 
 #endif
