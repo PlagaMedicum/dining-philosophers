@@ -8,3 +8,4 @@ Makefile
 *.vim
 .idea
 *.cbp
+compile_commands.json
