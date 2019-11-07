@@ -1,22 +1,17 @@
 #include "stick.h"
 
-Stick::Stick()
+void Stick::lock()
 {
-    
+    m.lock();
 }
 
-Stick::~Stick()
+void Stick::unlock()
 {
-
+    m.unlock();
 }
 
-void Stick::release()
+bool Stick::try_lock()
 {
-
-}
-
-void Stick::wait()
-{
-
+    return m.try_lock();
 }
 

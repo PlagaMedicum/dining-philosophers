@@ -6,7 +6,7 @@ int main(int argc, char** argv)
     add_phil("Kant", 2, 2);
     add_phil("Nietzsche", 3, 1);
 
-    start_dinner();
+    start_dinner(20);
 
     return 0;
 }

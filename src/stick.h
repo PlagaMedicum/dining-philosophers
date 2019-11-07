@@ -1,14 +1,17 @@
+#ifndef STICK_H
+#define STICK_H
+
 #include <mutex>
 
 class Stick
 {
 public:
-    Stick();
-    ~Stick();
-    void release();
-    void wait();
+    void lock();
+    void unlock();
+    bool try_lock();
 private:
-    std::mutex mux;
+    std::mutex m;
 };
 
+#endif
 
