@@ -1,12 +1,11 @@
 #include "dining_philosophers.h"
 #include <thread>
-#include <stdlib.h>
 #include <iostream>
 #include <unistd.h>
 
-void add_phil(std::string name, int think_t, int eat_t)
+void add_phil(const std::string& name, int think_t, int eat_t)
 {
-    phils.push_back(Philosopher(name, think_t, eat_t));
+    phils.emplace_back(name, think_t, eat_t);
 
     if(phils.size() == 1)
     {
@@ -20,12 +19,12 @@ void add_phil(std::string name, int think_t, int eat_t)
     phils[-1].set_r_stick(new Stick);
 }
 
-bool is_diner = 1;
+bool is_diner = true;
 
 void diner_timer(size_t d_time)
 {
     usleep(d_time);
-    is_diner = 0;
+    is_diner = false;
 }
 
 void start_phil(size_t i)
@@ -48,18 +47,18 @@ void start_phil(size_t i)
 
 void start_dinner(size_t time_ms)
 {
-    std::vector<std::thread*> p_threads;
-    for(size_t i = 0; i < phils.size(); i++)
-    {
-        p_threads.push_back(new std::thread(start_phil, i));
-    }
+//    std::vector<std::thread*> p_threads;
+//    for(size_t i = 0; i < phils.size(); i++)
+//    {
+//        p_threads.push_back(new std::thread(start_phil, i));
+//    }
 
-    std::thread timer(diner_timer, time_ms*1000);
-    timer.join();
-    for(size_t i = 0; i < p_threads.size(); i++)
-    {
-        p_threads[i]->join();
-    }
+//    std::thread timer(diner_timer, time_ms*1000);
+//    timer.join();
+//    for(auto & p_thread : p_threads)
+//    {
+//        p_thread->join();
+//    }
 
     std::cout << "Dinner finished";
 }

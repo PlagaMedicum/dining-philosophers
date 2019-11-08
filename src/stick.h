@@ -6,7 +6,6 @@
 class Stick
 {
 public:
-    void lock();
     void unlock();
     bool try_lock();
 private:

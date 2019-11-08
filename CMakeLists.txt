@@ -1,7 +1,11 @@
+cmake_minimum_required(VERSION 3.10)
+
 project(dining_philosophers)
+
+set(CMAKE_CXX_STANDARD 14)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # ycm things.
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(MAIN main.cpp src/dining_philosophers.cpp src/philosopher.cpp src/stick.cpp)
-add_executable(dine ${MAIN})
+set(SRC_FILES main.cpp src/dining_philosophers.cpp src/dining_philosophers.h src/philosopher.cpp src/philosopher.h src/stick.cpp src/stick.h)
+add_executable(dine ${SRC_FILES})

@@ -33,7 +33,7 @@ std::string Philosopher::get_name()
 
 void Philosopher::occupy_sticks()
 {
-    while(1)
+    while(true)
     {
         if(l_stick->try_lock())
         {

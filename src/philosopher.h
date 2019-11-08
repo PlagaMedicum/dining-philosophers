@@ -2,6 +2,7 @@
 #define PHILOSOPHER_H
 
 #include <string>
+#include <utility>
 #include <stdlib.h>
 #include "stick.h"
 
@@ -11,10 +12,10 @@ private:
     std::string name;
     size_t think_t; // thinking time in milliseconds
     size_t eat_t;   // eating time in milliseconds
-    Stick *l_stick, *r_stick;
+    Stick *l_stick{}, *r_stick{};
 public:
     Philosopher(std::string name, size_t think_t, size_t eat_t)
-        : name(name),
+        : name(std::move(name)),
         think_t(think_t),
         eat_t(eat_t)
     {}
