@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 
     std::cout << "\e[1;32mPhilosophers added. Starting dinner...\e[0m\n";
 
-    start_dinner(20);
+    start_dinner(100);
 
     return 0;
 }
