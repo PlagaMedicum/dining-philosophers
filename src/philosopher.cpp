@@ -1,5 +1,10 @@
 #include "philosopher.h"
 #include <iostream>
+#include <ctime>
+#include <mutex>
+#include <unistd.h>
+
+static std::mutex log_mtx;
 
 void Philosopher::set_l_stick(Stick* l_stick)
 {
@@ -16,14 +21,22 @@ Stick* Philosopher::get_l_stick()
     return l_stick;
 }
 
-size_t Philosopher::get_think_t()
+void Philosopher::think()
 {
-    return think_t;
+    log_mtx.lock();
+    std::cout << name << " is now \e[1;35mTHINKING\e[0m.\n";
+    log_mtx.unlock();
+
+    usleep(think_t*1000);
 }
 
-size_t Philosopher::get_eat_t()
+void Philosopher::eat()
 {
-    return eat_t;
+    log_mtx.lock();
+    std::cout << name << " is now \e[1;36mEATING\e[0m.\n";
+    log_mtx.unlock();
+
+    usleep(eat_t*1000);
 }
 
 std::string Philosopher::get_name()
@@ -33,6 +46,13 @@ std::string Philosopher::get_name()
 
 void Philosopher::occupy_sticks()
 {
+    log_mtx.lock();
+    std::cout << name << " tries to take sticks.\n";
+    log_mtx.unlock();
+
+    std::clock_t start_t;
+    start_t = std::clock();
+
     while(true)
     {
         if(l_stick->try_lock())
@@ -40,20 +60,27 @@ void Philosopher::occupy_sticks()
             if(!r_stick->try_lock())
             {
                 l_stick->unlock();
-                std::cout << name << " can't take a stick.";
                 continue;
             }
 
+            log_mtx.lock();
+            std::cout << name << " was \e[1;31mHUNGRY\e[0m for \e[1;31m" << (std::clock()*1000. - start_t)/CLOCKS_PER_SEC << "ms\e[0m.\n";
+            log_mtx.unlock();
+
+            start_t = std::clock();
+
             return;
         }
-
-        std::cout << name << " can't take a stick.";
     }
 
 }
 
 void Philosopher::release_sticks()
 {
+    log_mtx.lock();
+    std::cout << name << " putting down his sticks.\n";
+    log_mtx.unlock();
+
     l_stick->unlock();
     r_stick->unlock();
 }

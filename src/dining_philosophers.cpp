@@ -5,6 +5,7 @@
 
 void add_phil(const std::string& name, int think_t, int eat_t)
 {
+    std::cout << "\e[1;32mAdding " << name << "\e[0m\n";;
     phils.emplace_back(name, think_t, eat_t);
 
     if(phils.size() == 1)
@@ -15,51 +16,39 @@ void add_phil(const std::string& name, int think_t, int eat_t)
         return;
     }
 
-    phils[-1].set_l_stick(phils[-2].get_l_stick());
-    phils[-1].set_r_stick(new Stick);
-}
+    std::vector<Philosopher>::iterator phil = phils.end();
 
-bool is_diner = true;
-
-void diner_timer(size_t d_time)
-{
-    usleep(d_time);
-    is_diner = false;
+    (phil - 1)->set_l_stick((phil - 2)->get_l_stick());
+    (phil - 1)->set_r_stick(new Stick);
 }
 
 void start_phil(size_t i)
 {
-    while(is_diner)
+    while(1)
     {
-        std::cout << phils[i].get_name() << " is now thinking.";
-        usleep(phils[i].get_think_t()*1000);
-
-        std::cout << phils[i].get_name() << " tries to take sticks.";
+        phils[i].think();
         phils[i].occupy_sticks();
-
-        std::cout << phils[i].get_name() << " is now eating.";
-        usleep(phils[i].get_eat_t()*1000);
-
-        std::cout << phils[i].get_name() << " putting down his sticks.";
+        phils[i].eat();
         phils[i].release_sticks();
     }
 }
 
 void start_dinner(size_t time_ms)
 {
-//    std::vector<std::thread*> p_threads;
-//    for(size_t i = 0; i < phils.size(); i++)
-//    {
-//        p_threads.push_back(new std::thread(start_phil, i));
-//    }
+    std::vector<std::thread> p_threads;
+    for(size_t i = 0; i < phils.size(); i++)
+    {
+        p_threads.push_back(std::thread(start_phil, i));
+    }
 
-//    std::thread timer(diner_timer, time_ms*1000);
-//    timer.join();
-//    for(auto & p_thread : p_threads)
-//    {
-//        p_thread->join();
-//    }
+    std::thread timer(usleep, time_ms*1000);
+    timer.join();
 
-    std::cout << "Dinner finished";
+    for(std::thread & th : p_threads)
+    {
+        th.detach();
+    }
+
+    std::cout << "\e[1;32mDinner finished\e[0m\n";
 }
 

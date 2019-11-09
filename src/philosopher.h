@@ -24,8 +24,8 @@ public:
     void set_r_stick(Stick* r_stick);
 
     Stick* get_l_stick();
-    size_t get_think_t();
-    size_t get_eat_t();
+    void think();
+    void eat();
     std::string get_name();
 
     void occupy_sticks();
