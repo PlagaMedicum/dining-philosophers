@@ -51,7 +51,7 @@ void Philosopher::occupy_sticks()
     log_mtx.unlock();
 
     std::clock_t start_t;
-    start_t = std::clock();
+    start_t = std::clock()*1000;
 
     while(true)
     {
@@ -66,8 +66,6 @@ void Philosopher::occupy_sticks()
             log_mtx.lock();
             std::cout << name << " was \e[1;31mHUNGRY\e[0m for \e[1;31m" << (std::clock()*1000. - start_t)/CLOCKS_PER_SEC << "ms\e[0m.\n";
             log_mtx.unlock();
-
-            start_t = std::clock();
 
             return;
         }
